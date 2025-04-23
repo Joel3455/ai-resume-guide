@@ -44,15 +44,19 @@ const Header = () => {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Button
-            variant="outline"
-            size="sm"
-            className="hidden md:flex items-center gap-1"
-          >
-            <PieChart className="h-4 w-4 mr-1" />
-            Dashboard
-          </Button>
-          <Button size="sm">Get Started</Button>
+          <Link to="/dashboard">
+            <Button
+              variant="outline"
+              size="sm"
+              className="hidden md:flex items-center gap-1"
+            >
+              <PieChart className="h-4 w-4 mr-1" />
+              Dashboard
+            </Button>
+          </Link>
+          <Link to="/builder">
+            <Button size="sm">Get Started</Button>
+          </Link>
         </div>
       </div>
     </header>

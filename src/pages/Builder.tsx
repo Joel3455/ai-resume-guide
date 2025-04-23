@@ -11,6 +11,8 @@ import { FileDown, PieChart } from "lucide-react";
 import { useResumes } from "@/hooks/useResumes";
 import { initialResumeData } from "@/utils/resumeTemplates";
 import { ResumeData } from "@/types/resume";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 const Builder = () => {
   const [activeTab, setActiveTab] = useState("templates");
@@ -28,7 +30,9 @@ const Builder = () => {
         template_id: selectedTemplate,
         content: resumeData,
       });
+      toast.success("Resume saved successfully");
     } catch (error) {
+      toast.error("Error saving resume");
       console.error("Error saving resume:", error);
     }
   };
@@ -50,13 +54,11 @@ const Builder = () => {
   };
 
   const handleExport = () => {
-    // In a real app, this would trigger PDF generation
-    alert("This would generate a PDF in a real application");
+    toast.success("Resume would be downloaded as PDF in a real application");
   };
 
   const handleAnalyze = () => {
-    // In a real app, this would navigate to analyzer with current resume
-    alert("This would analyze your resume in a real application");
+    toast.success("Navigating to analyzer with current resume");
   };
 
   return (
@@ -127,9 +129,11 @@ const Builder = () => {
                 <Button variant="outline" onClick={handleExport}>
                   <FileDown className="mr-2 h-4 w-4" /> Download PDF
                 </Button>
-                <Button variant="outline" onClick={handleAnalyze}>
-                  <PieChart className="mr-2 h-4 w-4" /> Analyze Resume
-                </Button>
+                <Link to="/analyzer">
+                  <Button variant="outline" onClick={handleAnalyze}>
+                    <PieChart className="mr-2 h-4 w-4" /> Analyze Resume
+                  </Button>
+                </Link>
                 <Button variant="outline" onClick={handleSaveResume}>
                   Save Resume
                 </Button>

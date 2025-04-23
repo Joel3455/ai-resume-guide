@@ -8,6 +8,8 @@ import AnalyzerResults from "@/components/ResumeAnalyzer/AnalyzerResults";
 import { Upload, FileUp, FilePlus2, FileText, ArrowRight } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
+import { toast } from "sonner";
 
 // Mock analysis data for demonstration
 const mockAnalysisData = {
@@ -72,13 +74,28 @@ const Analyzer = () => {
   };
 
   const handleAnalyze = () => {
+    if (!file) {
+      toast.error("Please upload a resume file first");
+      return;
+    }
+    
     setAnalyzing(true);
     // Simulate API call delay
     setTimeout(() => {
       setAnalysisData(mockAnalysisData);
       setActiveTab("results");
       setAnalyzing(false);
+      toast.success("Resume analysis complete");
     }, 1500);
+  };
+
+  const handleExportPDF = () => {
+    toast.success("Resume would be downloaded as PDF in a real application");
+  };
+
+  const handleCreateOptimizedResume = () => {
+    toast.success("Creating optimized resume based on analysis");
+    // In a real application, this would navigate to resume builder with pre-filled data
   };
 
   return (
@@ -176,7 +193,7 @@ const Analyzer = () => {
               <div className="mt-8 flex justify-end">
                 <Button
                   onClick={handleAnalyze}
-                  disabled={!file && !analyzing}
+                  disabled={!file || analyzing}
                   className="min-w-[120px]"
                 >
                   {analyzing ? (
@@ -200,9 +217,16 @@ const Analyzer = () => {
                 <Button variant="outline" onClick={() => setActiveTab("upload")}>
                   Upload Different Resume
                 </Button>
-                <Button>
-                  <FilePlus2 className="mr-2 h-4 w-4" /> Create Optimized Resume
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={handleExportPDF}>
+                    <FileUp className="mr-2 h-4 w-4" /> Download Analysis
+                  </Button>
+                  <Link to="/builder">
+                    <Button onClick={handleCreateOptimizedResume}>
+                      <FilePlus2 className="mr-2 h-4 w-4" /> Create Optimized Resume
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </TabsContent>
           </Tabs>

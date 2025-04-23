@@ -11,6 +11,7 @@ import Auth from "./pages/Auth";
 import Builder from "./pages/Builder";
 import Analyzer from "./pages/Analyzer";
 import NotFound from "./pages/NotFound";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,11 @@ const App = () => (
             <Route path="/analyzer" element={
               <ProtectedRoute>
                 <Analyzer />
+              </ProtectedRoute>
+            } />
+            <Route path="/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
               </ProtectedRoute>
             } />
             <Route path="*" element={<NotFound />} />
