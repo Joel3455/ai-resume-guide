@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { useResumes } from "@/hooks/useResumes";
-import { initialResumeData } from "@/utils/resumeTemplates";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -102,7 +101,7 @@ const ResumeForm = ({ resumeData, setResumeData }: ResumeFormProps) => {
           <div>
             <Input
               placeholder="Website (optional)"
-              value={resumeData.personalInfo.website}
+              value={resumeData.personalInfo.website || ""}
               onChange={(e) => updatePersonalInfo("website", e.target.value)}
             />
           </div>

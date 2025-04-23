@@ -1,4 +1,6 @@
 
+import { Json } from "@/integrations/supabase/types";
+
 export interface ResumeData {
   personalInfo: {
     fullName: string;
@@ -42,4 +44,18 @@ export interface Resume {
   content: ResumeData;
   created_at: string;
   updated_at: string;
+  user_id?: string;
+}
+
+// Type guard to check if a JSON value matches the ResumeData structure
+export function isResumeData(json: Json): json is ResumeData {
+  const data = json as any;
+  return (
+    data &&
+    typeof data === 'object' &&
+    'personalInfo' in data &&
+    'experience' in data &&
+    'education' in data &&
+    'skills' in data
+  );
 }

@@ -1,8 +1,9 @@
 
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Resume, ResumeData } from "@/types/resume";
+import { Resume, ResumeData, isResumeData } from "@/types/resume";
 import { toast } from "sonner";
+import { Json } from "@/integrations/supabase/types";
 
 export function useResumes() {
   const queryClient = useQueryClient();
@@ -20,7 +21,11 @@ export function useResumes() {
         throw error;
       }
 
-      return data as Resume[];
+      // Type-safe conversion from database records to Resume[]
+      return data.map(item => ({
+        ...item,
+        content: item.content as unknown as ResumeData
+      })) as Resume[];
     },
   });
 
@@ -30,9 +35,19 @@ export function useResumes() {
       template_id: string;
       content: ResumeData;
     }) => {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session?.session?.user) {
+        throw new Error("User not authenticated");
+      }
+
       const { data, error } = await supabase
         .from("resumes")
-        .insert([{ title, template_id, content }])
+        .insert({
+          title, 
+          template_id, 
+          content: content as unknown as Json,
+          user_id: session.session.user.id
+        })
         .select()
         .single();
 
@@ -50,10 +65,21 @@ export function useResumes() {
   });
 
   const updateResume = useMutation({
-    mutationFn: async ({ id, ...data }: Partial<Resume> & { id: string }) => {
+    mutationFn: async ({ id, title, template_id, content }: { 
+      id: string;
+      title?: string;
+      template_id?: string;
+      content?: ResumeData;
+    }) => {
+      const updateData: any = {};
+      
+      if (title !== undefined) updateData.title = title;
+      if (template_id !== undefined) updateData.template_id = template_id;
+      if (content !== undefined) updateData.content = content as unknown as Json;
+      
       const { data: updatedResume, error } = await supabase
         .from("resumes")
-        .update(data)
+        .update(updateData)
         .eq("id", id)
         .select()
         .single();

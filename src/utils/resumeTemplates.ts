@@ -51,3 +51,43 @@ export const resumeTemplates: ResumeTemplate[] = [
     category: 'Entry Level'
   }
 ];
+
+export const initialResumeData = {
+  personalInfo: {
+    fullName: "",
+    jobTitle: "",
+    email: "",
+    phone: "",
+    location: "",
+    website: "",
+    summary: "",
+  },
+  experience: [
+    {
+      id: "exp-1",
+      company: "",
+      position: "",
+      location: "",
+      startDate: "",
+      endDate: "",
+      current: false,
+      description: "",
+    },
+  ],
+  education: [
+    {
+      id: "edu-1",
+      institution: "",
+      degree: "",
+      location: "",
+      startDate: "",
+      endDate: "",
+      description: "",
+    },
+  ],
+  skills: [
+    { id: "skill-1", name: "", level: "Advanced" as const },
+    { id: "skill-2", name: "", level: "Advanced" as const },
+    { id: "skill-3", name: "", level: "Intermediate" as const },
+  ],
+};

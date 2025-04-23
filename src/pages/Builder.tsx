@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,60 +7,24 @@ import Footer from "@/components/Layout/Footer";
 import TemplateSelector from "@/components/ResumeBuilder/TemplateSelector";
 import ResumeForm from "@/components/ResumeBuilder/ResumeForm";
 import ResumePreview from "@/components/ResumeBuilder/ResumePreview";
-import { FileDown, PieChart, Eye } from "lucide-react";
+import { FileDown, PieChart } from "lucide-react";
 import { useResumes } from "@/hooks/useResumes";
-
-const initialResumeData = {
-  personalInfo: {
-    fullName: "",
-    jobTitle: "",
-    email: "",
-    phone: "",
-    location: "",
-    website: "",
-    summary: "",
-  },
-  experience: [
-    {
-      id: "exp-1",
-      company: "",
-      position: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      current: false,
-      description: "",
-    },
-  ],
-  education: [
-    {
-      id: "edu-1",
-      institution: "",
-      degree: "",
-      location: "",
-      startDate: "",
-      endDate: "",
-      description: "",
-    },
-  ],
-  skills: [
-    { id: "skill-1", name: "", level: "Advanced" },
-    { id: "skill-2", name: "", level: "Advanced" },
-    { id: "skill-3", name: "", level: "Intermediate" },
-  ],
-};
+import { initialResumeData } from "@/utils/resumeTemplates";
+import { ResumeData } from "@/types/resume";
 
 const Builder = () => {
   const [activeTab, setActiveTab] = useState("templates");
   const [selectedTemplate, setSelectedTemplate] = useState("modern-professional");
-  const [resumeData, setResumeData] = useState(initialResumeData);
+  const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
 
-  const { createResume, updateResume } = useResumes();
+  const { createResume } = useResumes();
   
   const handleSaveResume = async () => {
     try {
       await createResume.mutateAsync({
-        title: "My Resume",
+        title: resumeData.personalInfo.fullName ? 
+          `${resumeData.personalInfo.fullName}'s Resume` : 
+          "My Resume",
         template_id: selectedTemplate,
         content: resumeData,
       });
@@ -138,14 +103,22 @@ const Builder = () => {
             </TabsContent>
             
             <TabsContent value="content" className="max-w-3xl mx-auto">
-              <ResumeForm resumeData={resumeData} setResumeData={setResumeData} />
+              <ResumeForm 
+                resumeData={resumeData} 
+                setResumeData={(data: ResumeData) => setResumeData(data)} 
+              />
               <div className="mt-8 flex justify-between">
                 <Button variant="outline" onClick={handlePreviousStep}>
                   Back to Templates
                 </Button>
-                <Button onClick={handleNextStep}>
-                  Preview Resume
-                </Button>
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={handleSaveResume}>
+                    Save Resume
+                  </Button>
+                  <Button onClick={handleNextStep}>
+                    Preview Resume
+                  </Button>
+                </div>
               </div>
             </TabsContent>
             
@@ -156,6 +129,9 @@ const Builder = () => {
                 </Button>
                 <Button variant="outline" onClick={handleAnalyze}>
                   <PieChart className="mr-2 h-4 w-4" /> Analyze Resume
+                </Button>
+                <Button variant="outline" onClick={handleSaveResume}>
+                  Save Resume
                 </Button>
               </div>
               
