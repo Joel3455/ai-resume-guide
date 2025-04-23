@@ -120,7 +120,7 @@ const ResumeForm = ({ resumeData, setResumeData }: ResumeFormProps) => {
   const removeSkill = (id: string) => {
     setResumeData({
       ...resumeData,
-      skills: resumeData.skills.filter((skill) => skill.id !== skill),
+      skills: resumeData.skills.filter((skill) => skill.id !== id),
     });
   };
 
