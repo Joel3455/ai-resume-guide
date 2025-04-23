@@ -9,7 +9,104 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          first_name: string | null
+          id: string
+          last_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          first_name?: string | null
+          id?: string
+          last_name?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resume_analyses: {
+        Row: {
+          ats_compatibility: number
+          created_at: string
+          id: string
+          keyword_matches: Json
+          overall_score: number
+          resume_id: string
+          sections: Json
+          suggestions: string[]
+        }
+        Insert: {
+          ats_compatibility: number
+          created_at?: string
+          id?: string
+          keyword_matches: Json
+          overall_score: number
+          resume_id: string
+          sections: Json
+          suggestions: string[]
+        }
+        Update: {
+          ats_compatibility?: number
+          created_at?: string
+          id?: string
+          keyword_matches?: Json
+          overall_score?: number
+          resume_id?: string
+          sections?: Json
+          suggestions?: string[]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resume_analyses_resume_id_fkey"
+            columns: ["resume_id"]
+            isOneToOne: false
+            referencedRelation: "resumes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resumes: {
+        Row: {
+          content: Json
+          created_at: string
+          id: string
+          template_id: string
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          id?: string
+          template_id: string
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: string
+          template_id?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
