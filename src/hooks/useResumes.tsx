@@ -2,7 +2,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Resume, ResumeData, isResumeData } from "@/types/resume";
-import { toast } from "sonner";
+import { toast } from "@/components/ui/sonner"; // Use sonner toast 
 import { Json } from "@/integrations/supabase/types";
 
 export function useResumes() {
@@ -21,10 +21,11 @@ export function useResumes() {
         throw error;
       }
 
+      // Convert the database response to Resume types with proper typing
       return data.map(item => ({
         ...item,
         content: item.content as unknown as ResumeData
-      }));
+      })) as Resume[];
     },
   });
 
@@ -70,12 +71,15 @@ export function useResumes() {
       template_id?: string;
       content?: ResumeData;
     }) => {
+      // Convert content to Json type for Supabase
+      const supabaseUpdateData = {
+        ...updateData,
+        content: updateData.content ? (updateData.content as unknown as Json) : undefined
+      };
+
       const { data, error } = await supabase
         .from("resumes")
-        .update({
-          ...updateData,
-          content: updateData.content ? (updateData.content as unknown as Json) : undefined
-        })
+        .update(supabaseUpdateData)
         .eq("id", id)
         .select()
         .single();

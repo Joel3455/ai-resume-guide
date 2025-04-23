@@ -1,3 +1,6 @@
+
+import { ResumeData } from "@/types/resume";
+
 export interface ResumeTemplate {
   id: string;
   name: string;
@@ -85,8 +88,8 @@ export const initialResumeData: ResumeData = {
     },
   ],
   skills: [
-    { id: "skill-1", name: "", level: "Advanced" as const },
-    { id: "skill-2", name: "", level: "Intermediate" as const },
-    { id: "skill-3", name: "", level: "Beginner" as const },
+    { id: "skill-1", name: "", level: "Advanced" },
+    { id: "skill-2", name: "", level: "Intermediate" },
+    { id: "skill-3", name: "", level: "Beginner" },
   ],
 };

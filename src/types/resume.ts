@@ -63,7 +63,10 @@ export function isResumeData(json: Json): json is Json {
 
     // Validate skills have correct level values
     const validSkillLevels = ['Beginner', 'Intermediate', 'Advanced'];
-    const hasValidSkills = data.skills.every((skill: any) =>
+    const hasValidSkills = Array.isArray(data.skills) && data.skills.every((skill: any) =>
+      skill && 
+      typeof skill === 'object' && 
+      'level' in skill && 
       validSkillLevels.includes(skill.level)
     );
 
