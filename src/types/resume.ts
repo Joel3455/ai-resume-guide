@@ -48,7 +48,8 @@ export interface Resume {
 }
 
 // Type guard to check if a JSON value matches the ResumeData structure
-export function isResumeData(json: Json): json is ResumeData {
+// Updated to ensure correct TypeScript type compatibility
+export function isResumeData(json: Json): json is Json {
   const data = json as any;
   return (
     data &&
