@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +7,7 @@ import TemplateSelector from "@/components/ResumeBuilder/TemplateSelector";
 import ResumeForm from "@/components/ResumeBuilder/ResumeForm";
 import ResumePreview from "@/components/ResumeBuilder/ResumePreview";
 import { FileDown, PieChart, Eye } from "lucide-react";
+import { useResumes } from "@/hooks/useResumes";
 
 const initialResumeData = {
   personalInfo: {
@@ -53,6 +53,20 @@ const Builder = () => {
   const [activeTab, setActiveTab] = useState("templates");
   const [selectedTemplate, setSelectedTemplate] = useState("modern-professional");
   const [resumeData, setResumeData] = useState(initialResumeData);
+
+  const { createResume, updateResume } = useResumes();
+  
+  const handleSaveResume = async () => {
+    try {
+      await createResume.mutateAsync({
+        title: "My Resume",
+        template_id: selectedTemplate,
+        content: resumeData,
+      });
+    } catch (error) {
+      console.error("Error saving resume:", error);
+    }
+  };
 
   const handleNextStep = () => {
     if (activeTab === "templates") {
