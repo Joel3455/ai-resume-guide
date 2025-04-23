@@ -21,11 +21,10 @@ export function useResumes() {
         throw error;
       }
 
-      // Type-safe conversion from database records to Resume[]
       return data.map(item => ({
         ...item,
         content: item.content as unknown as ResumeData
-      })) as Resume[];
+      }));
     },
   });
 
@@ -65,27 +64,24 @@ export function useResumes() {
   });
 
   const updateResume = useMutation({
-    mutationFn: async ({ id, title, template_id, content }: { 
+    mutationFn: async ({ id, ...updateData }: { 
       id: string;
       title?: string;
       template_id?: string;
       content?: ResumeData;
     }) => {
-      const updateData: any = {};
-      
-      if (title !== undefined) updateData.title = title;
-      if (template_id !== undefined) updateData.template_id = template_id;
-      if (content !== undefined) updateData.content = content as unknown as Json;
-      
-      const { data: updatedResume, error } = await supabase
+      const { data, error } = await supabase
         .from("resumes")
-        .update(updateData)
+        .update({
+          ...updateData,
+          content: updateData.content ? (updateData.content as unknown as Json) : undefined
+        })
         .eq("id", id)
         .select()
         .single();
 
       if (error) throw error;
-      return updatedResume;
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["resumes"] });

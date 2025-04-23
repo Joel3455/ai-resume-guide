@@ -1,4 +1,3 @@
-
 export interface ResumeTemplate {
   id: string;
   name: string;
@@ -52,7 +51,7 @@ export const resumeTemplates: ResumeTemplate[] = [
   }
 ];
 
-export const initialResumeData = {
+export const initialResumeData: ResumeData = {
   personalInfo: {
     fullName: "",
     jobTitle: "",
@@ -87,7 +86,7 @@ export const initialResumeData = {
   ],
   skills: [
     { id: "skill-1", name: "", level: "Advanced" as const },
-    { id: "skill-2", name: "", level: "Advanced" as const },
-    { id: "skill-3", name: "", level: "Intermediate" as const },
+    { id: "skill-2", name: "", level: "Intermediate" as const },
+    { id: "skill-3", name: "", level: "Beginner" as const },
   ],
 };

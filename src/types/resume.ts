@@ -48,15 +48,27 @@ export interface Resume {
 }
 
 // Type guard to check if a JSON value matches the ResumeData structure
-// Updated to ensure correct TypeScript type compatibility
 export function isResumeData(json: Json): json is Json {
-  const data = json as any;
-  return (
-    data &&
-    typeof data === 'object' &&
-    'personalInfo' in data &&
-    'experience' in data &&
-    'education' in data &&
-    'skills' in data
-  );
+  try {
+    const data = json as any;
+    const hasRequiredFields = 
+      data &&
+      typeof data === 'object' &&
+      'personalInfo' in data &&
+      'experience' in data &&
+      'education' in data &&
+      'skills' in data;
+
+    if (!hasRequiredFields) return false;
+
+    // Validate skills have correct level values
+    const validSkillLevels = ['Beginner', 'Intermediate', 'Advanced'];
+    const hasValidSkills = data.skills.every((skill: any) =>
+      validSkillLevels.includes(skill.level)
+    );
+
+    return hasValidSkills;
+  } catch {
+    return false;
+  }
 }
