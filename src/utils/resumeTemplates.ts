@@ -1,4 +1,3 @@
-
 import { ResumeData } from "@/types/resume";
 
 export interface ResumeTemplate {
@@ -14,42 +13,42 @@ export const resumeTemplates: ResumeTemplate[] = [
     id: 'modern-professional',
     name: 'Modern Professional',
     description: 'Clean and minimal design with a modern touch.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
     category: 'Professional'
   },
   {
     id: 'executive-elite',
     name: 'Executive Elite',
     description: 'Sophisticated template ideal for senior positions.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
     category: 'Executive'
   },
   {
     id: 'creative-bold',
     name: 'Creative Bold',
     description: 'Stand out with this vibrant and unique layout.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
     category: 'Creative'
   },
   {
     id: 'tech-minimal',
     name: 'Tech Minimal',
     description: 'Sleek design focused on technical skills display.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6',
     category: 'Tech'
   },
   {
     id: 'academic-formal',
     name: 'Academic Formal',
     description: 'Traditional format suitable for academic positions.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
     category: 'Academic'
   },
   {
     id: 'entry-level',
     name: 'Entry Level',
     description: 'Perfect for recent graduates and early career professionals.',
-    thumbnail: '/placeholder.svg',
+    thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
     category: 'Entry Level'
   }
 ];
