@@ -24,6 +24,10 @@ const TemplateSelector = ({
     ? resumeTemplates 
     : resumeTemplates.filter(template => template.category === selectedCategory);
 
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.src = "/placeholder/resume-template-placeholder.jpg";
+  };
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">Choose a Template</h2>
@@ -61,6 +65,7 @@ const TemplateSelector = ({
                           src={template.thumbnail}
                           alt={template.name}
                           className="h-full w-full object-cover"
+                          onError={handleImageError}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent p-4 flex flex-col justify-end">
                           <h3 className="text-lg font-medium text-white">{template.name}</h3>
