@@ -11,7 +11,7 @@ import { FileDown, PieChart } from "lucide-react";
 import { useResumes } from "@/hooks/useResumes";
 import { initialResumeData } from "@/utils/resumeTemplates";
 import { ResumeData } from "@/types/resume";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const Builder = () => {
@@ -20,6 +20,7 @@ const Builder = () => {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
 
   const { createResume } = useResumes();
+  const navigate = useNavigate();
   
   const handleSaveResume = async () => {
     try {
@@ -59,6 +60,7 @@ const Builder = () => {
 
   const handleAnalyze = () => {
     toast.success("Navigating to analyzer with current resume");
+    navigate("/analyzer");
   };
 
   return (

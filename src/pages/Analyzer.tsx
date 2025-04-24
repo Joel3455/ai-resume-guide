@@ -70,7 +70,20 @@ const Analyzer = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
+      toast.success(`File "${e.target.files[0].name}" selected`);
     }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      setFile(e.dataTransfer.files[0]);
+      toast.success(`File "${e.dataTransfer.files[0].name}" uploaded`);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
   };
 
   const handleAnalyze = () => {
@@ -90,7 +103,7 @@ const Analyzer = () => {
   };
 
   const handleExportPDF = () => {
-    toast.success("Resume would be downloaded as PDF in a real application");
+    toast.success("Analysis report would be downloaded as PDF in a real application");
   };
 
   const handleCreateOptimizedResume = () => {
@@ -126,7 +139,12 @@ const Analyzer = () => {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <h2 className="text-xl font-semibold">Upload Your Resume</h2>
-                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                    <div 
+                      className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50 transition-colors"
+                      onDrop={handleDrop}
+                      onDragOver={handleDragOver}
+                      onClick={() => document.getElementById('resume-upload')?.click()}
+                    >
                       <div className="mb-4 flex justify-center">
                         <div className="rounded-full bg-primary-100 p-3">
                           <Upload className="h-6 w-6 text-primary-700" />
@@ -147,22 +165,21 @@ const Analyzer = () => {
                         accept=".pdf,.docx,.txt"
                         className="hidden"
                       />
-                      <label htmlFor="resume-upload">
-                        <div className="inline-block">
-                          <Button
-                            variant="outline"
-                            className="mt-4"
-                            type="button"
-                          >
-                            <FileUp className="mr-2 h-4 w-4" /> Select File
-                          </Button>
-                        </div>
-                      </label>
                     </div>
                     {file && (
-                      <div className="flex items-center gap-2 p-2 bg-gray-50 rounded-md border">
-                        <FileText className="h-4 w-4 text-primary-600" />
-                        <span className="text-sm truncate">{file.name}</span>
+                      <div className="flex items-center justify-between gap-2 p-3 bg-gray-50 rounded-md border">
+                        <div className="flex items-center gap-2">
+                          <FileText className="h-4 w-4 text-primary-600" />
+                          <span className="text-sm truncate">{file.name}</span>
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="h-8 w-8 p-0"
+                          onClick={() => setFile(null)}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
                       </div>
                     )}
                   </div>

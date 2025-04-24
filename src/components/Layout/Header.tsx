@@ -2,8 +2,11 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileText, PieChart } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const Header = () => {
+  const { user } = useAuth();
+  
   return (
     <header className="border-b border-border bg-background py-4">
       <div className="container flex items-center justify-between">
