@@ -1,6 +1,7 @@
 
 import { useState } from "react";
-import { resumeTemplates, ResumeTemplate } from "@/utils/resumeTemplates";
+import { resumeTemplates } from "@/utils/resumeTemplates";
+import { ResumeTemplate } from "@/types/resume";
 import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
