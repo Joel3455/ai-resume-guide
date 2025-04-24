@@ -1,5 +1,5 @@
-
 import React from "react";
+import { cn } from "@/lib/utils";
 
 interface ResumePreviewProps {
   resumeData: any;
@@ -7,14 +7,70 @@ interface ResumePreviewProps {
 }
 
 const ResumePreview = ({ resumeData, templateId }: ResumePreviewProps) => {
+  const getTemplateStyles = () => {
+    switch (templateId) {
+      case 'modern-professional':
+        return "font-sans";
+      case 'executive-elite':
+        return "font-serif";
+      case 'creative-bold':
+        return "font-sans space-y-8";
+      case 'tech-minimal':
+        return "font-mono";
+      case 'academic-formal':
+        return "font-serif leading-relaxed";
+      case 'entry-level':
+        return "font-sans space-y-6";
+      case 'minimal-elegant':
+        return "font-sans tracking-wide";
+      case 'startup-modern':
+        return "font-sans space-y-6";
+      case 'corporate-classic':
+        return "font-serif leading-relaxed";
+      case 'creative-portfolio':
+        return "font-sans space-y-8";
+      case 'research-scholar':
+        return "font-serif leading-loose";
+      case 'fresh-graduate':
+        return "font-sans space-y-4";
+      default:
+        return "font-sans";
+    }
+  };
+
   return (
-    <div className="border rounded-md shadow-sm bg-white p-8 max-w-[800px] mx-auto">
-      {/* This is a simplified preview. In a real application, you'd have specific layouts per template */}
-      <div className="mb-6 pb-6 border-b">
-        <h1 className="text-3xl font-bold text-center">{resumeData.personalInfo.fullName}</h1>
-        <p className="text-xl text-center text-gray-500">{resumeData.personalInfo.jobTitle}</p>
+    <div className={cn(
+      "border rounded-md shadow-sm bg-white p-8 max-w-[800px] mx-auto",
+      getTemplateStyles()
+    )}>
+      <div className={cn(
+        "mb-6 pb-6 border-b",
+        templateId === 'creative-bold' && "text-center bg-primary-50 p-6 rounded-lg",
+        templateId === 'tech-minimal' && "border-none",
+        templateId === 'minimal-elegant' && "border-none pt-8"
+      )}>
+        <h1 className={cn(
+          "text-3xl font-bold",
+          templateId === 'creative-bold' && "text-4xl",
+          templateId === 'tech-minimal' && "text-2xl",
+          templateId === 'minimal-elegant' && "text-4xl tracking-wider"
+        )}>
+          {resumeData.personalInfo.fullName}
+        </h1>
+        <p className={cn(
+          "text-xl text-gray-500",
+          templateId === 'creative-bold' && "text-primary-600",
+          templateId === 'tech-minimal' && "text-lg",
+          templateId === 'minimal-elegant' && "text-xl tracking-wide"
+        )}>
+          {resumeData.personalInfo.jobTitle}
+        </p>
         
-        <div className="flex flex-wrap justify-center gap-3 mt-3 text-sm">
+        <div className={cn(
+          "flex flex-wrap justify-center gap-3 mt-3 text-sm",
+          templateId === 'tech-minimal' && "justify-start",
+          templateId === 'minimal-elegant' && "gap-6"
+        )}>
           {resumeData.personalInfo.email && (
             <div>{resumeData.personalInfo.email}</div>
           )}

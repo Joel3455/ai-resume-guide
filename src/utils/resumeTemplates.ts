@@ -50,6 +50,48 @@ export const resumeTemplates: ResumeTemplate[] = [
     description: 'Perfect for recent graduates and early career professionals.',
     thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
     category: 'Entry Level'
+  },
+  {
+    id: 'minimal-elegant',
+    name: 'Minimal Elegant',
+    description: 'A clean and elegant design with perfect white space.',
+    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    category: 'Professional'
+  },
+  {
+    id: 'startup-modern',
+    name: 'Startup Modern',
+    description: 'Perfect for startup and tech industry professionals.',
+    thumbnail: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d',
+    category: 'Tech'
+  },
+  {
+    id: 'corporate-classic',
+    name: 'Corporate Classic',
+    description: 'Traditional design trusted by corporate professionals.',
+    thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b',
+    category: 'Executive'
+  },
+  {
+    id: 'creative-portfolio',
+    name: 'Creative Portfolio',
+    description: 'Showcase your creative work with style.',
+    thumbnail: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7',
+    category: 'Creative'
+  },
+  {
+    id: 'research-scholar',
+    name: 'Research Scholar',
+    description: 'Ideal for researchers and academics.',
+    thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158',
+    category: 'Academic'
+  },
+  {
+    id: 'fresh-graduate',
+    name: 'Fresh Graduate',
+    description: 'Highlight your potential with this graduate-focused design.',
+    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085',
+    category: 'Entry Level'
   }
 ];
 
