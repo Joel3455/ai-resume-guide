@@ -2,89 +2,91 @@
 import { ResumeTemplate } from "@/types/resume";
 import { ResumeData } from "@/types/resume";
 
+// Now we generate unique identifier strings for thumbnails
+// instead of relying on actual image files that might be missing
 export const resumeTemplates: ResumeTemplate[] = [
   {
     id: 'modern-professional',
     name: 'Modern Professional',
     description: 'Clean and minimal design with a modern touch.',
-    thumbnail: '/resume-templates/modern-professional.jpg',
+    thumbnail: 'modern-professional',
     category: 'Professional'
   },
   {
     id: 'executive-elite',
     name: 'Executive Elite',
     description: 'Sophisticated template ideal for senior positions.',
-    thumbnail: '/resume-templates/executive-elite.jpg',
+    thumbnail: 'executive-elite',
     category: 'Executive'
   },
   {
     id: 'creative-bold',
     name: 'Creative Bold',
     description: 'Stand out with this vibrant and unique layout.',
-    thumbnail: '/resume-templates/creative-bold.jpg',
+    thumbnail: 'creative-bold',
     category: 'Creative'
   },
   {
     id: 'tech-minimal',
     name: 'Tech Minimal',
     description: 'Sleek design focused on technical skills display.',
-    thumbnail: '/resume-templates/tech-minimal.jpg',
+    thumbnail: 'tech-minimal',
     category: 'Tech'
   },
   {
     id: 'academic-formal',
     name: 'Academic Formal',
     description: 'Traditional format suitable for academic positions.',
-    thumbnail: '/resume-templates/academic-formal.jpg',
+    thumbnail: 'academic-formal',
     category: 'Academic'
   },
   {
     id: 'entry-level',
     name: 'Entry Level',
     description: 'Perfect for recent graduates and early career professionals.',
-    thumbnail: '/resume-templates/entry-level.jpg',
+    thumbnail: 'entry-level',
     category: 'Entry Level'
   },
   {
     id: 'minimal-elegant',
     name: 'Minimal Elegant',
     description: 'A clean and elegant design with perfect white space.',
-    thumbnail: '/resume-templates/minimal-elegant.jpg',
+    thumbnail: 'minimal-elegant',
     category: 'Professional'
   },
   {
     id: 'startup-modern',
     name: 'Startup Modern',
     description: 'Perfect for startup and tech industry professionals.',
-    thumbnail: '/resume-templates/startup-modern.jpg',
+    thumbnail: 'startup-modern',
     category: 'Tech'
   },
   {
     id: 'corporate-classic',
     name: 'Corporate Classic',
     description: 'Traditional design trusted by corporate professionals.',
-    thumbnail: '/resume-templates/corporate-classic.jpg',
+    thumbnail: 'corporate-classic',
     category: 'Executive'
   },
   {
     id: 'creative-portfolio',
     name: 'Creative Portfolio',
     description: 'Showcase your creative work with style.',
-    thumbnail: '/resume-templates/creative-portfolio.jpg',
+    thumbnail: 'creative-portfolio',
     category: 'Creative'
   },
   {
     id: 'research-scholar',
     name: 'Research Scholar',
     description: 'Ideal for researchers and academics.',
-    thumbnail: '/resume-templates/research-scholar.jpg',
+    thumbnail: 'research-scholar',
     category: 'Academic'
   },
   {
     id: 'fresh-graduate',
     name: 'Fresh Graduate',
     description: 'Highlight your potential with this graduate-focused design.',
-    thumbnail: '/resume-templates/fresh-graduate.jpg',
+    thumbnail: 'fresh-graduate',
     category: 'Entry Level'
   }
 ];
