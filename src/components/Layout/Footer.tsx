@@ -1,9 +1,6 @@
-
 import { Link } from "react-router-dom";
-
 const Footer = () => {
-  return (
-    <footer className="bg-primary-800 text-white py-12">
+  return <footer className="bg-primary-800 text-white py-12">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
@@ -45,7 +42,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-gray-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-400">© 2023 ResumeAI. All rights reserved.</p>
+          <p className="text-sm text-gray-400">© 2025 ResumeAI. All rights reserved.</p>
           <div className="flex gap-4 mt-4 md:mt-0">
             <span className="text-gray-400 hover:text-white cursor-pointer">
               <span className="sr-only">Twitter</span>
@@ -68,8 +65,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
