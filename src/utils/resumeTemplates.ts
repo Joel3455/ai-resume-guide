@@ -1,96 +1,88 @@
-import { ResumeData } from "@/types/resume";
-
-export interface ResumeTemplate {
-  id: string;
-  name: string;
-  description: string;
-  thumbnail: string;
-  category: string;
-}
+import { ResumeTemplate } from "@/types/resume";
 
 export const resumeTemplates: ResumeTemplate[] = [
   {
     id: 'modern-professional',
     name: 'Modern Professional',
     description: 'Clean and minimal design with a modern touch.',
-    thumbnail: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085', // MacBook with code
+    thumbnail: '/placeholder/modern-professional.png',
     category: 'Professional'
   },
   {
     id: 'executive-elite',
     name: 'Executive Elite',
     description: 'Sophisticated template ideal for senior positions.',
-    thumbnail: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b', // Laptop on desk
+    thumbnail: '/placeholder/executive-elite.png',
     category: 'Executive'
   },
   {
     id: 'creative-bold',
     name: 'Creative Bold',
     description: 'Stand out with this vibrant and unique layout.',
-    thumbnail: 'https://images.unsplash.com/photo-1649972904349-6e44c42644a7', // Creative workspace
+    thumbnail: '/placeholder/creative-bold.png',
     category: 'Creative'
   },
   {
     id: 'tech-minimal',
     name: 'Tech Minimal',
     description: 'Sleek design focused on technical skills display.',
-    thumbnail: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d', // MacBook Pro
+    thumbnail: '/placeholder/tech-minimal.png',
     category: 'Tech'
   },
   {
     id: 'academic-formal',
     name: 'Academic Formal',
     description: 'Traditional format suitable for academic positions.',
-    thumbnail: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158', // Academic workspace
+    thumbnail: '/placeholder/academic-formal.png',
     category: 'Academic'
   },
   {
     id: 'entry-level',
     name: 'Entry Level',
     description: 'Perfect for recent graduates and early career professionals.',
-    thumbnail: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843', // Soft light and workspace
+    thumbnail: '/placeholder/entry-level.png',
     category: 'Entry Level'
   },
   {
     id: 'minimal-elegant',
     name: 'Minimal Elegant',
     description: 'A clean and elegant design with perfect white space.',
-    thumbnail: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05', // Minimalist landscape
+    thumbnail: '/placeholder/minimal-elegant.png',
     category: 'Professional'
   },
   {
     id: 'startup-modern',
     name: 'Startup Modern',
     description: 'Perfect for startup and tech industry professionals.',
-    thumbnail: 'https://images.unsplash.com/photo-1500673922987-e212871fec22', // Creative lighting
+    thumbnail: '/placeholder/startup-modern.png',
     category: 'Tech'
   },
   {
     id: 'corporate-classic',
     name: 'Corporate Classic',
     description: 'Traditional design trusted by corporate professionals.',
-    thumbnail: 'https://images.unsplash.com/photo-1501854140801-50d01698950b', // Aerial view of organized space
+    thumbnail: '/placeholder/corporate-classic.png',
     category: 'Executive'
   },
   {
     id: 'creative-portfolio',
     name: 'Creative Portfolio',
     description: 'Showcase your creative work with style.',
-    thumbnail: 'https://images.unsplash.com/photo-1493397212122-2b85dda8106b', // Architectural design
+    thumbnail: '/placeholder/creative-portfolio.png',
     category: 'Creative'
   },
   {
     id: 'research-scholar',
     name: 'Research Scholar',
     description: 'Ideal for researchers and academics.',
-    thumbnail: 'https://images.unsplash.com/photo-1518495973542-4542c06a5843', // Scientific, clean image
+    thumbnail: '/placeholder/research-scholar.png',
     category: 'Academic'
   },
   {
     id: 'fresh-graduate',
     name: 'Fresh Graduate',
     description: 'Highlight your potential with this graduate-focused design.',
-    thumbnail: 'https://images.unsplash.com/photo-1501854140801-50d01698950b', // Inspiring landscape
+    thumbnail: '/placeholder/fresh-graduate.png',
     category: 'Entry Level'
   }
 ];
