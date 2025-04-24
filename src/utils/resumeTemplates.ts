@@ -1,4 +1,5 @@
-import { ResumeTemplate } from "@/types/resume";
+
+import { ResumeTemplate, ResumeData } from "@/types/resume";
 
 export const resumeTemplates: ResumeTemplate[] = [
   {

@@ -1,6 +1,14 @@
 
 import { Json } from "@/integrations/supabase/types";
 
+export interface ResumeTemplate {
+  id: string;
+  name: string;
+  description: string;
+  thumbnail: string;
+  category: string;
+}
+
 export interface ResumeData {
   personalInfo: {
     fullName: string;
