@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import AnalyzerResults from "@/components/ResumeAnalyzer/AnalyzerResults";
-import { Upload, FileUp, FilePlus2, FileText, ArrowRight } from "lucide-react";
+import { Upload, FileUp, FilePlus2, FileText, ArrowRight, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
