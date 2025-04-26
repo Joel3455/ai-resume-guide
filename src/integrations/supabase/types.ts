@@ -46,6 +46,7 @@ export type Database = {
           resume_id: string
           sections: Json
           suggestions: string[]
+          user_id: string | null
         }
         Insert: {
           ats_compatibility: number
@@ -56,6 +57,7 @@ export type Database = {
           resume_id: string
           sections: Json
           suggestions: string[]
+          user_id?: string | null
         }
         Update: {
           ats_compatibility?: number
@@ -66,6 +68,7 @@ export type Database = {
           resume_id?: string
           sections?: Json
           suggestions?: string[]
+          user_id?: string | null
         }
         Relationships: [
           {

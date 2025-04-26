@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -65,26 +66,29 @@ const Analyzer = () => {
       return;
     }
     
+    if (!user) {
+      toast.error("Please sign in to analyze resumes");
+      return;
+    }
+    
     setAnalyzing(true);
     try {
-      // Generate analysis based on the actual file content
       const analysis = await generateAnalysisFromResume(file, jobDescription);
       
-      if (user) {
-        // Save analysis to Supabase if user is logged in
-        const { error } = await supabase
-          .from('resume_analyses')
-          .insert({
-            overall_score: analysis.overallScore,
-            ats_compatibility: analysis.atsCompatibility,
-            keyword_matches: analysis.keywordMatches,
-            sections: analysis.sections,
-            suggestions: analysis.suggestions,
-            resume_id: previousAnalyses?.id || null,
-          });
-          
-        if (error) throw error;
-      }
+      // Save analysis to Supabase with user_id
+      const { error } = await supabase
+        .from('resume_analyses')
+        .insert({
+          overall_score: analysis.overallScore,
+          ats_compatibility: analysis.atsCompatibility,
+          keyword_matches: analysis.keywordMatches,
+          sections: analysis.sections,
+          suggestions: analysis.suggestions,
+          resume_id: previousAnalyses?.id || null,
+          user_id: user.id // Add user_id when inserting
+        });
+        
+      if (error) throw error;
       
       setAnalysisData(analysis);
       setActiveTab("results");
