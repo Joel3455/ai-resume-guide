@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -75,7 +74,7 @@ const Analyzer = () => {
     try {
       const analysis = await generateAnalysisFromResume(file, jobDescription);
       
-      // Save analysis to Supabase
+      // Save analysis to Supabase - don't use previousAnalyses.id as resume_id
       const { data, error } = await supabase
         .from('resume_analyses')
         .insert({
@@ -84,7 +83,7 @@ const Analyzer = () => {
           keyword_matches: analysis.keywordMatches,
           sections: analysis.sections,
           suggestions: analysis.suggestions,
-          resume_id: previousAnalyses?.id || null,
+          resume_id: null, // Set to null since we don't have a valid resume_id
           user_id: user.id
         })
         .select()
