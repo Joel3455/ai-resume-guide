@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, AlertTriangle, XCircle, Info } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface AnalyzerResultsProps {
   analysisData: {
@@ -21,9 +22,14 @@ interface AnalyzerResultsProps {
     }[];
     suggestions: string[];
   };
+  isLoading?: boolean;
 }
 
-const AnalyzerResults = ({ analysisData }: AnalyzerResultsProps) => {
+const AnalyzerResults = ({ analysisData, isLoading = false }: AnalyzerResultsProps) => {
+  if (isLoading) {
+    return <AnalysisSkeletonLoader />;
+  }
+  
   return (
     <div className="space-y-6">
       <Card>
@@ -125,6 +131,103 @@ const AnalyzerResults = ({ analysisData }: AnalyzerResultsProps) => {
               <li key={index} className="flex gap-2">
                 <Info className="h-5 w-5 text-primary-600 flex-shrink-0 mt-0.5" />
                 <p className="text-gray-700">{suggestion}</p>
+              </li>
+            ))}
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
+// Skeleton loader for the analysis results while they're loading
+const AnalysisSkeletonLoader = () => {
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Overall Resume Score</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex items-end gap-2 mb-2">
+            <Skeleton className="h-10 w-24" />
+            <Skeleton className="h-5 w-32" />
+          </div>
+          <Skeleton className="h-3 w-full my-2" />
+          
+          <div className="mt-6">
+            <div className="flex items-center justify-between mb-2">
+              <Skeleton className="h-5 w-48" />
+              <Skeleton className="h-5 w-12" />
+            </div>
+            <Skeleton className="h-2 w-full" />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Keyword Analysis</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 mb-2">Matched Keywords</h3>
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3, 4].map((i) => (
+                  <Skeleton key={i} className="h-7 w-20 rounded-full" />
+                ))}
+              </div>
+            </div>
+            <div>
+              <h3 className="text-sm font-medium text-gray-500 mb-2">Missing Keywords</h3>
+              <div className="flex flex-wrap gap-2">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-7 w-20 rounded-full" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Section Analysis</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="border-b pb-4 last:border-b-0 last:pb-0">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <Skeleton className="h-5 w-5 rounded-full" />
+                    <Skeleton className="h-5 w-32" />
+                  </div>
+                  <Skeleton className="h-5 w-12" />
+                </div>
+                <Skeleton className="h-2 w-full mb-2" />
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-3/4 mt-1" />
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-xl">Improvement Suggestions</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="space-y-3">
+            {[1, 2, 3, 4].map((i) => (
+              <li key={i} className="flex gap-2">
+                <Skeleton className="h-5 w-5 flex-shrink-0 mt-0.5" />
+                <div className="w-full">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-5/6 mt-1" />
+                </div>
               </li>
             ))}
           </ul>
