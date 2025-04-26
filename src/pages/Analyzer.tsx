@@ -75,8 +75,8 @@ const Analyzer = () => {
     try {
       const analysis = await generateAnalysisFromResume(file, jobDescription);
       
-      // Save analysis to Supabase with user_id
-      const { error } = await supabase
+      // Save analysis to Supabase
+      const { data, error } = await supabase
         .from('resume_analyses')
         .insert({
           overall_score: analysis.overallScore,
@@ -85,10 +85,15 @@ const Analyzer = () => {
           sections: analysis.sections,
           suggestions: analysis.suggestions,
           resume_id: previousAnalyses?.id || null,
-          user_id: user.id // Add user_id when inserting
-        });
+          user_id: user.id
+        })
+        .select()
+        .single();
         
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase insert error:", error);
+        throw error;
+      }
       
       setAnalysisData(analysis);
       setActiveTab("results");

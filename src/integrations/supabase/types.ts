@@ -43,7 +43,7 @@ export type Database = {
           id: string
           keyword_matches: Json
           overall_score: number
-          resume_id: string
+          resume_id: string | null
           sections: Json
           suggestions: string[]
           user_id: string | null
@@ -54,7 +54,7 @@ export type Database = {
           id?: string
           keyword_matches: Json
           overall_score: number
-          resume_id: string
+          resume_id?: string | null
           sections: Json
           suggestions: string[]
           user_id?: string | null
@@ -65,7 +65,7 @@ export type Database = {
           id?: string
           keyword_matches?: Json
           overall_score?: number
-          resume_id?: string
+          resume_id?: string | null
           sections?: Json
           suggestions?: string[]
           user_id?: string | null
