@@ -5,14 +5,13 @@ import { Card, CardContent } from "@/components/ui/card";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileText, Award, Briefcase, Lightbulb, GraduationCap, BookOpen, User, SlidersHorizontal } from "lucide-react";
+import { FileText, Award, Briefcase, Lightbulb, GraduationCap, BookOpen, User, SlidersHorizontal, Mail, Phone, MapPin } from "lucide-react";
 
 interface TemplateSelectorProps {
   selectedTemplate: string;
   onSelectTemplate: (templateId: string) => void;
 }
 
-// Get icon for each template category
 const getCategoryIcon = (category: string) => {
   switch (category) {
     case 'Professional': return <FileText className="h-4 w-4" />;
@@ -37,66 +36,130 @@ const TemplateSelector = ({
     ? resumeTemplates 
     : resumeTemplates.filter(template => template.category === selectedCategory);
 
+  const getSampleData = (template: ResumeTemplate) => {
+    switch (template.category) {
+      case 'Tech':
+        return {
+          name: 'SARAH PARKER',
+          title: 'SENIOR SOFTWARE ENGINEER',
+          experience: 'Full Stack Developer at Google',
+          education: 'M.S. Computer Science',
+          skills: ['React', 'Node.js', 'Python']
+        };
+      case 'Creative':
+        return {
+          name: 'EMMA WILSON',
+          title: 'UI/UX DESIGNER',
+          experience: 'Lead Designer at Apple',
+          education: 'BFA in Design',
+          skills: ['Figma', 'Adobe XD', 'Sketch']
+        };
+      case 'Executive':
+        return {
+          name: 'MICHAEL CHEN',
+          title: 'CHIEF TECHNOLOGY OFFICER',
+          experience: 'VP of Engineering at Amazon',
+          education: 'MBA, Technology Management',
+          skills: ['Leadership', 'Strategy', 'Innovation']
+        };
+      case 'Academic':
+        return {
+          name: 'DR. ANNA SMITH',
+          title: 'RESEARCH SCIENTIST',
+          experience: 'Senior Researcher at MIT',
+          education: 'Ph.D. in Physics',
+          skills: ['Research', 'Data Analysis', 'Publishing']
+        };
+      case 'Entry Level':
+        return {
+          name: 'JAMES WILSON',
+          title: 'JUNIOR DEVELOPER',
+          experience: 'Software Intern',
+          education: 'B.S. Computer Science',
+          skills: ['HTML/CSS', 'JavaScript', 'Git']
+        };
+      default:
+        return {
+          name: 'JOHN DOE',
+          title: 'MARKETING MANAGER',
+          experience: 'Senior Marketing Role',
+          education: 'Bachelor in Marketing',
+          skills: ['Digital Marketing', 'Analytics', 'SEO']
+        };
+    }
+  };
+
   const renderTemplatePreview = (template: ResumeTemplate) => {
     const isCreative = template.id.includes('creative');
     const isTech = template.id.includes('tech');
     const isMinimal = template.id.includes('minimal');
+    const sampleData = getSampleData(template);
     
     return (
       <div className={`h-full ${template.id === selectedTemplate ? 'border-2 border-primary-500' : 'border border-gray-200'} rounded-sm p-2 overflow-hidden`}>
         {/* Header Section */}
         <div className={`${isCreative ? 'bg-primary-50 p-2 rounded' : ''} ${isTech ? 'border-b-0' : 'border-b'} pb-2 mb-2`}>
           <div className={`font-bold ${isCreative ? 'text-lg text-primary-600' : (isTech ? 'text-sm font-mono' : 'text-md')} text-center`}>
-            JANE DOE
+            {sampleData.name}
           </div>
           <div className={`text-xs text-gray-500 ${isMinimal ? 'tracking-wide' : ''} text-center mb-1`}>
-            {template.category === 'Tech' ? 'FRONTEND DEVELOPER' : 
-             template.category === 'Creative' ? 'GRAPHIC DESIGNER' :
-             template.category === 'Executive' ? 'SENIOR MANAGER' : 'PROFESSIONAL'}
+            {sampleData.title}
           </div>
         </div>
 
         {/* Content Preview */}
         <div className="space-y-2 text-xs">
-          {/* Personal Info Section */}
-          <div className="flex items-center gap-1 text-primary-600">
-            <User className="h-3 w-3" />
-            <div className="h-1 bg-gray-200 w-20 rounded"></div>
+          {/* Contact Info Section */}
+          <div className="flex flex-wrap gap-2 text-primary-600 justify-center mb-2">
+            <span className="flex items-center gap-1">
+              <Mail className="h-3 w-3" />
+              <span className="text-gray-600">email@example.com</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <Phone className="h-3 w-3" />
+              <span className="text-gray-600">(555) 123-4567</span>
+            </span>
+            <span className="flex items-center gap-1">
+              <MapPin className="h-3 w-3" />
+              <span className="text-gray-600">New York, NY</span>
+            </span>
           </div>
 
           {/* Experience Section */}
           <div className="flex items-center gap-1 text-primary-600">
             <Briefcase className="h-3 w-3" />
-            <div className="space-y-1 flex-1">
-              <div className="h-1 bg-gray-200 w-full rounded"></div>
-              <div className="h-1 bg-gray-200 w-3/4 rounded"></div>
+            <div className="flex-1">
+              <div className="text-gray-700 font-medium">Experience</div>
+              <div className="text-gray-600">{sampleData.experience}</div>
             </div>
           </div>
 
           {/* Education Section */}
           <div className="flex items-center gap-1 text-primary-600">
             <GraduationCap className="h-3 w-3" />
-            <div className="space-y-1 flex-1">
-              <div className="h-1 bg-gray-200 w-full rounded"></div>
-              <div className="h-1 bg-gray-200 w-2/3 rounded"></div>
+            <div className="flex-1">
+              <div className="text-gray-700 font-medium">Education</div>
+              <div className="text-gray-600">{sampleData.education}</div>
             </div>
           </div>
 
           {/* Skills Section */}
           <div className="flex items-center gap-1 text-primary-600">
             <SlidersHorizontal className="h-3 w-3" />
-            {['creative-bold', 'tech-minimal', 'startup-modern'].includes(template.id) ? (
-              <div className="flex gap-1">
-                <div className="h-2 w-2 rounded-full bg-primary-500"></div>
-                <div className="h-2 w-2 rounded-full bg-primary-300"></div>
-                <div className="h-2 w-2 rounded-full bg-gray-300"></div>
+            <div className="flex-1">
+              <div className="text-gray-700 font-medium">Skills</div>
+              <div className="flex flex-wrap gap-1">
+                {sampleData.skills.map((skill, index) => (
+                  <span key={index} className={`text-xs px-1.5 py-0.5 rounded-full ${
+                    isCreative ? 'bg-primary-50 text-primary-600' :
+                    isTech ? 'bg-gray-100 font-mono' :
+                    'bg-gray-100 text-gray-600'
+                  }`}>
+                    {skill}
+                  </span>
+                ))}
               </div>
-            ) : (
-              <div className="space-y-1 flex-1">
-                <div className="h-1 bg-gray-200 w-1/2 rounded"></div>
-                <div className="h-1 bg-gray-200 w-1/3 rounded"></div>
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
