@@ -4,7 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Layout/Header";
 import Footer from "@/components/Layout/Footer";
 import AnalyzerResults from "@/components/ResumeAnalyzer/AnalyzerResults";
-import { Upload, FileUp, FilePlus2, FileText, ArrowRight, X } from "lucide-react";
+import { Upload, FileUp, FilePlus2, FileText, ArrowRight, X, Briefcase } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
@@ -13,16 +13,20 @@ import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useQuery } from "@tanstack/react-query";
 import { generateAnalysisFromResume } from "@/utils/analyzeResume";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import CreateJobPosting from "@/components/JobPosting/CreateJobPosting";
+import { useJobPostings } from "@/hooks/useJobPostings";
 
-const Analyzer = () => {
+export default function Analyzer() {
   const [activeTab, setActiveTab] = useState("upload");
   const [jobDescription, setJobDescription] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [analyzing, setAnalyzing] = useState(false);
   const [analysisData, setAnalysisData] = useState<any>(null);
   const { user } = useAuth();
+  const { jobPostings } = useJobPostings();
+  const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
 
-  // Query to fetch previous analysis data if the user is logged in
   const { data: previousAnalyses } = useQuery({
     queryKey: ['analyses', user?.id],
     queryFn: async () => {
@@ -74,7 +78,6 @@ const Analyzer = () => {
     try {
       const analysis = await generateAnalysisFromResume(file, jobDescription);
       
-      // Save analysis to Supabase - don't use previousAnalyses.id as resume_id
       const { data, error } = await supabase
         .from('resume_analyses')
         .insert({
@@ -83,7 +86,7 @@ const Analyzer = () => {
           keyword_matches: analysis.keywordMatches,
           sections: analysis.sections,
           suggestions: analysis.suggestions,
-          resume_id: null, // Set to null since we don't have a valid resume_id
+          resume_id: null,
           user_id: user.id
         })
         .select()
@@ -92,6 +95,30 @@ const Analyzer = () => {
       if (error) {
         console.error("Supabase insert error:", error);
         throw error;
+      }
+
+      if (selectedJobId && data) {
+        const selectedJob = jobPostings?.find(job => job.id === selectedJobId);
+        if (selectedJob) {
+          const { error: matchError } = await supabase
+            .from('job_matches')
+            .insert({
+              user_id: user.id,
+              job_posting_id: selectedJobId,
+              resume_analysis_id: data.id,
+              match_score: analysis.overallScore,
+              skill_matches: analysis.keywordMatches.matched || [],
+              missing_skills: analysis.keywordMatches.missing || [],
+              recommendations: analysis.suggestions
+            });
+
+          if (matchError) {
+            console.error("Error creating job match:", matchError);
+            toast.error("Failed to create job match");
+          } else {
+            toast.success("Resume matched against job posting successfully");
+          }
+        }
       }
       
       setAnalysisData(analysis);
@@ -191,12 +218,57 @@ const Analyzer = () => {
                 <div className="space-y-6">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <h2 className="text-xl font-semibold">Add Job Description</h2>
-                      <span className="text-xs text-gray-400">Optional</span>
+                      <h2 className="text-xl font-semibold">Compare with Job</h2>
+                      <Sheet>
+                        <SheetTrigger asChild>
+                          <Button variant="outline" size="sm">
+                            <Briefcase className="mr-2 h-4 w-4" />
+                            Post New Job
+                          </Button>
+                        </SheetTrigger>
+                        <SheetContent>
+                          <h2 className="text-lg font-semibold mb-4">Create Job Posting</h2>
+                          <CreateJobPosting />
+                        </SheetContent>
+                      </Sheet>
                     </div>
+                    
+                    {jobPostings && jobPostings.length > 0 ? (
+                      <div className="space-y-4">
+                        {jobPostings.map((job) => (
+                          <div
+                            key={job.id}
+                            className={`p-4 border rounded-lg cursor-pointer transition-colors ${
+                              selectedJobId === job.id
+                                ? "border-primary bg-primary/5"
+                                : "hover:border-primary/50"
+                            }`}
+                            onClick={() => {
+                              setSelectedJobId(job.id);
+                              setJobDescription(job.description);
+                            }}
+                          >
+                            <h3 className="font-medium">{job.title}</h3>
+                            <p className="text-sm text-gray-500">{job.company}</p>
+                            {job.location && (
+                              <p className="text-sm text-gray-500 mt-1">{job.location}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="text-center py-8 bg-gray-50 rounded-lg">
+                        <Briefcase className="mx-auto h-12 w-12 text-gray-400" />
+                        <h3 className="mt-4 text-lg font-medium">No job postings yet</h3>
+                        <p className="mt-1 text-gray-500">
+                          Create a job posting to match against resumes
+                        </p>
+                      </div>
+                    )}
+
                     <div className="space-y-2">
                       <Label htmlFor="job-description">
-                        Paste the job description to optimize your resume for this specific role
+                        Job Description {selectedJobId && "(Auto-filled from selected job)"}
                       </Label>
                       <Textarea
                         id="job-description"
@@ -255,6 +327,4 @@ const Analyzer = () => {
       <Footer />
     </div>
   );
-};
-
-export default Analyzer;
+}

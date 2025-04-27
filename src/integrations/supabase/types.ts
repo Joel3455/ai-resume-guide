@@ -9,6 +9,96 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      job_matches: {
+        Row: {
+          created_at: string
+          id: string
+          job_posting_id: string
+          match_score: number
+          missing_skills: string[]
+          recommendations: string[]
+          resume_analysis_id: string
+          skill_matches: string[]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_posting_id: string
+          match_score: number
+          missing_skills?: string[]
+          recommendations?: string[]
+          resume_analysis_id: string
+          skill_matches?: string[]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_posting_id?: string
+          match_score?: number
+          missing_skills?: string[]
+          recommendations?: string[]
+          resume_analysis_id?: string
+          skill_matches?: string[]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_matches_job_posting_id_fkey"
+            columns: ["job_posting_id"]
+            isOneToOne: false
+            referencedRelation: "job_postings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_matches_resume_analysis_id_fkey"
+            columns: ["resume_analysis_id"]
+            isOneToOne: false
+            referencedRelation: "resume_analyses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_postings: {
+        Row: {
+          company: string
+          created_at: string
+          description: string
+          id: string
+          location: string | null
+          requirements: string[]
+          salary_range: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company: string
+          created_at?: string
+          description: string
+          id?: string
+          location?: string | null
+          requirements?: string[]
+          salary_range?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company?: string
+          created_at?: string
+          description?: string
+          id?: string
+          location?: string | null
+          requirements?: string[]
+          salary_range?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
